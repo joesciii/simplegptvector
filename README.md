@@ -1,4 +1,4 @@
-# Simple GPT / Vector DB interfacing with UI
+# Simple GPT / Vector Database interfacing with UI
 
 Majority of base functionality from here https://github.com/greg643/gpt including chunking and interfacing with apis.
 
