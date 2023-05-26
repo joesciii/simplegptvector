@@ -55,12 +55,12 @@ global_model="gpt-3.5-turbo"
 global_max_tokens = 4000
 global_completions = 4
 global_chunk_size = 500 #gpt-3.5 works better with smaller vector chunks
-openai.api_key = "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"
+openai.api_key = "api key"
 
 #### Pinecone API key
 
-PINECONE_API_KEY = 'e53efef3-7da7-467b-a7ec-245d0d83dc82'
-PINECONE_API_ENV = 'us-west4-gcp-free'
+PINECONE_API_KEY = 'api key'
+PINECONE_API_ENV = 'env name'
 
 #### User Identification
 
@@ -154,8 +154,8 @@ def chunk_to_pinecone(df):
     
     # Initialize connection to Pinecone
     pinecone.init(
-    api_key="e53efef3-7da7-467b-a7ec-245d0d83dc82", 
-    environment="us-west4-gcp-free"
+    api_key="api key", 
+    environment="env name"
     )
     
     # Connect to the index and view index stats
