@@ -1,6 +1,6 @@
 # Simple GPT / Vector Database interfacing with UI
 
-GUI to allow GPT to interact with data external to it's training or context too large for chat. Supports links to PDFs, html pages and plaintext.
+GUI to allow GPT to interact with data external to it's training or context too large for chat. Supports links to PDFs, html pages and plaintext. Run gui.py.
 
 Base functionality from here https://github.com/greg643/gpt including chunking and interfacing with apis. Chosen due to not requiring langchain or other helper libs. "Close to base APIs".
 
