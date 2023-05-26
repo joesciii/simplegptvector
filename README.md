@@ -10,8 +10,6 @@ But for now is used.
 
 ### Prerequisites
 
-```python
-pip install pdfminer.six requests pytesseract openai requests nltk bs4 xmltodict pinecone-client tiktoken pdf2image markdown plotly
-```
+lots. check imports.
 
 
