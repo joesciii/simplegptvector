@@ -46,7 +46,7 @@ import tiktoken
 import tkinter as tk
 from tkinter import messagebox
 from uuid import uuid4
-
+from bs4 import BeautifulSoup
 
 #### OpenAI API Key
 
@@ -55,12 +55,12 @@ global_model="gpt-3.5-turbo"
 global_max_tokens = 4000
 global_completions = 4
 global_chunk_size = 500 #gpt-3.5 works better with smaller vector chunks
-openai.api_key = "api key"
+openai.api_key = "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"
 
 #### Pinecone API key
 
-PINECONE_API_KEY = 'api key'
-PINECONE_API_ENV = 'env name'
+PINECONE_API_KEY = 'e53efef3-7da7-467b-a7ec-245d0d83dc82'
+PINECONE_API_ENV = 'us-west4-gcp-free'
 
 #### User Identification
 
@@ -154,8 +154,8 @@ def chunk_to_pinecone(df):
     
     # Initialize connection to Pinecone
     pinecone.init(
-    api_key="api key", 
-    environment="pinecone env"
+    api_key="e53efef3-7da7-467b-a7ec-245d0d83dc82", 
+    environment="us-west4-gcp-free"
     )
     
     # Connect to the index and view index stats
@@ -245,8 +245,8 @@ def ask(question):
     
     # Initialize connection to Pinecone
     pinecone.init(
-    api_key="api key", 
-    environment="env name"
+    api_key="e53efef3-7da7-467b-a7ec-245d0d83dc82", 
+    environment="us-west4-gcp-free"
     )
     
     # Connect to the index and view index stats
@@ -271,7 +271,7 @@ def ask(question):
     
     augmented_query = "\n\n---\n\n".join(contexts)+"\n\n-----\n\n"+user_input # + query
     
-    # system message to assign role the model
+    # system message to assign role to the model
     system_msg = f"""You are a helpul machine learning assistant and tutor. Answer questions based on the context provided, provide support for your answer, or say Unable to find reference."
     """
     
@@ -344,10 +344,17 @@ def ask_question_from_gui(url, question):
         try:
             # Extract text from the URL
             r = requests.get(url, headers=headers, allow_redirects=True)
-            text = extract_text(io.BytesIO(r.content))
+            if 'application/pdf' in r.headers['Content-Type']:
+                text = extract_text(io.BytesIO(r.content))
+            elif 'text/plain' in r.headers['Content-Type']:
+                text = r.text
+            else:
+                soup = BeautifulSoup(r.content, 'html.parser')
+                text = ' '.join([p.get_text() for p in soup.find_all('p')])
+
             text = clean_extracted_text(text)
-        
-            # Each Vector will have a unqiue ID
+
+            # Each Vector will have a unique ID
             uuid = str(uuid4())
             new_row = {
                         'GUID': uuid,
@@ -358,16 +365,14 @@ def ask_question_from_gui(url, question):
                         }
             new_df = pd.DataFrame([new_row])
             chunk_to_pinecone(new_df)
-            
+
             # Get the answer
             answer = ask(question)
             return answer
         except Exception as e:
             messagebox.showerror("Error", "There was an error processing the URL.\n" + str(e))
-
-        e
     else:
-            return "Please enter a URL and a question."
+        return "Please enter a URL and a question."
 
 """ def upload_from_url():
     # Get the URL from the entry field
