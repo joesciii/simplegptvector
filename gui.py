@@ -1,57 +1,62 @@
 import tkinter as tk
 from tkinter import messagebox
-from gpt_functions import *
+import gpt_functions
 
-# Creating main tkinter windows
+# Creating main tkinter window
 root = tk.Tk()
-root.geometry("800x600") # You can set any size
-root.title("OpenAI and Pinecone Query Interface")
+root.geometry("800x600") 
+root.title("simplegptpinecone")
 
-# Creating a label for url input
-url_label = tk.Label(root, text = "Enter a URL:")
+# Creating a label for URL input
+url_label = tk.Label(root, text = "Enter the URL of your PDF document:")
 url_label.pack()
 
-# Creating a text field for url
-url_entry = tk.Entry(root, width = 100)
+# Creating a text field for URL
+url_entry = tk.Entry(root, width = 50)
 url_entry.pack()
-
-# Creating a button for submission
-upload_button = tk.Button(root, text = "Upload from URL", command = upload_from_url)
-upload_button.pack()
 
 # Creating a label for question input
 question_label = tk.Label(root, text = "Enter your question:")
 question_label.pack()
 
 # Creating a text field for question
-question_entry = tk.Entry(root, width = 100)
+question_entry = tk.Entry(root, width = 50)
 question_entry.pack()
-
-# Creating a button for submission
-submit_button = tk.Button(root, text = "Submit", command = ask_question_from_gui)
-submit_button.pack()
 
 # Creating a text field for answer
 answer_label = tk.Label(root, text = "Answer:")
 answer_label.pack()
 
-# Create a scroll bar
-scrollbar_horizontal = tk.Scrollbar(root, orient = 'horizontal')
-scrollbar_horizontal.pack(side = 'bottom', fill = 'x')
+# Setting wrap="word" and adding horizontal and vertical scrollbars
+scrollbar = tk.Scrollbar(root)
+scrollbar.pack(side="right", fill="y")
+answer_text = tk.Text(root, width = 50, height = 10, wrap="word", yscrollcommand=scrollbar.set)
+answer_text.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=answer_text.yview)
 
-scrollbar_vertical = tk.Scrollbar(root)
-scrollbar_vertical.pack(side = 'right', fill = 'y')
+def submit():
+    url = url_entry.get()
+    question = question_entry.get()
 
-# Create text widget and specify size.
-answer_text = tk.Text(root, width = 80, height = 10, wrap = 'word',
-                      xscrollcommand = scrollbar_horizontal.set,
-                      yscrollcommand = scrollbar_vertical.set)
+    answer = gpt_functions.ask_question_from_gui(url, question)
+    
+    # Clear the previous answer
+    answer_text.delete(1.0, tk.END)
+    
+    # Insert the new answer
+    if answer:
+        answer_text.insert(tk.END, answer)
 
-answer_text.pack()
-
-# Configure the scrollbars
-scrollbar_horizontal.config(command = answer_text.xview)
-scrollbar_vertical.config(command = answer_text.yview)
+# Creating a button for submission
+submit_button = tk.Button(root, text = "Submit", command = submit)
+submit_button.pack()
 
 # Running the GUI
 root.mainloop()
+
+
+
+
+
+
+
