@@ -245,8 +245,8 @@ def ask(question):
     
     # Initialize connection to Pinecone
     pinecone.init(
-    api_key="e53efef3-7da7-467b-a7ec-245d0d83dc82", 
-    environment="us-west4-gcp-free"
+    api_key="api key", 
+    environment="env name"
     )
     
     # Connect to the index and view index stats
