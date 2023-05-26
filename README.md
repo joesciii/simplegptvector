@@ -1,4 +1,4 @@
-# Simple GPT / Vector DB interfacing
+# Simple GPT / Vector DB interfacing with UI
 
 Majority of base functionality from here https://github.com/greg643/gpt
 
@@ -9,8 +9,6 @@ Apparently pinecone isn't needed https://github.com/openai/openai-cookbook/blob/
 But for now is used.
 
 ### Prerequisites
-
-For Python, you will need most of these, might as well install them all:
 
 ```python
 pip install pdfminer.six requests pytesseract openai requests nltk bs4 xmltodict pinecone-client tiktoken pdf2image markdown plotly
