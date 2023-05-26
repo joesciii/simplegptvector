@@ -1,8 +1,6 @@
 # Simple GPT / Vector Database interfacing with UI
 
-Majority of base functionality from here https://github.com/greg643/gpt including chunking and interfacing with apis.
-
-Testing how far GPT can add functionality to this.
+Base functionality from here https://github.com/greg643/gpt including chunking and interfacing with apis. Chosen due to not requiring langchain or other helper libs. "Close to base APIs".
 
 Apparently pinecone isn't needed https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
